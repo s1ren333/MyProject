@@ -1,5 +1,4 @@
-﻿using MyProject.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,19 +15,20 @@ using System.Windows.Shapes;
 namespace MyProject.View
 {
     /// <summary>
-    /// Логика взаимодействия для Window1.xaml
+    /// Логика взаимодействия для ADDuser.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class ADDuser : Window
     {
-        public Window1()
+        public ADDuser()
         {
             InitializeComponent();
-            DataContext = new UserViewModel();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            Main m = new Main();
+            m .Show();
+            Close();
         }
     }
 }

@@ -10,26 +10,20 @@ using System.Windows;
 using System.ComponentModel;
 using System.Data;
 using System.Xml.Linq;
+using System.Windows.Media;
+using MyProject.View;
+using System.Windows.Controls;
 
 namespace MyProject.ViewModels 
 {
+
     public class UserViewModel : INotifyPropertyChanged
     {
+
         private string connectionString = "Data Source=localhost;Initial Catalog=User;Integrated Security=True";
         private string username;
         private string password;
-        private int id;
         private User newUser;
-
-        public int Id
-        {
-            get { return id; }
-            set
-            {
-                id = value;
-                OnPropertyChanged(nameof(Id));
-            }
-        }
 
         public string Username
         {
@@ -50,43 +44,12 @@ namespace MyProject.ViewModels
                 OnPropertyChanged(nameof(Password));
             }
         }
-
-        public ICommand LoginCommand { get; private set; }
-
         public UserViewModel()
         {
             LoginCommand = new RelayCommand(Login);
             NewUser = new User();
             AddUserCommand = new RelayCommand(AddUser);
-        }
-
-        private void Login()
-        {
-            if (IsUserValid(Username, Password))
-            {
-                MessageBox.Show($"Добро пожаловать {Username}"); 
-            }
-            else
-            {
-                MessageBox.Show("Пользователь не найден в базе данных.");
-            }
-        }
-
-        private bool IsUserValid(string username, string password)
-        {                      
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM user_table1 WHERE UserName = @UserName AND Password = @Password", connection);
-                    command.Parameters.AddWithValue("@UserName", username);
-                    command.Parameters.AddWithValue("@Password", password);
-
-                    int count = (int)command.ExecuteScalar();
-
-                    return count > 0;
-                }
-            
+            EditUserCommand = new RelayCommand(EditUser);
         }
         public User NewUser
         {
@@ -98,17 +61,62 @@ namespace MyProject.ViewModels
             }
         }
 
+        public ICommand LoginCommand { get; private set; }
         public ICommand AddUserCommand { get; private set; }
+        public ICommand EditUserCommand { get; private set; }
 
+
+        private void Login()
+        {
+            Main m = new Main();
+            MainWindow mainWindow = new MainWindow();
+            if (IsUserValid(Username, Password))
+            {
+                App.Current.Windows[0].Close();
+                MessageBox.Show($"Добро пожаловать {Username}"); 
+                m.Show();
+            }
+            else
+            {
+                MessageBox.Show("Пользователь не найден в базе данных.");
+            }
+        }
+    
+        private bool IsUserValid(string username, string password)
+        {           
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM UserTable WHERE UserName = @UserName AND Password = @Password", connection);
+                    command.Parameters.AddWithValue("@UserName", username);
+                    command.Parameters.AddWithValue("@Password", password);
+
+                    int count = (int)command.ExecuteScalar();
+
+                    return count > 0;
+                }
+
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }           
+        }
 
         private void AddUser()
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
+                
 
-                SqlCommand command = new SqlCommand("INSERT INTO user_table1 (Id_user, FirstName, LastName, Username, Password) VALUES (@Id, @FirstName, @LastName, @Username, @Password)", connection);
-                command.Parameters.AddWithValue("@Id", NewUser.Id);
+                SqlCommand command = new SqlCommand("INSERT INTO UserTable (FirstName, LastName, Username, Password) VALUES (@FirstName, @LastName, @Username, @Password)", connection);
+                try
+                {
+
                 command.Parameters.AddWithValue("@FirstName", NewUser.FirstName);
                 command.Parameters.AddWithValue("@LastName", NewUser.LastName);
                 command.Parameters.AddWithValue("@Username", NewUser.Username);
@@ -124,23 +132,52 @@ namespace MyProject.ViewModels
                 {
                     MessageBox.Show("Не удалось добавить пользователя в базу данных.");
                 }
+                }
+                catch 
+                {
+                    MessageBox.Show("Введены некорректные данные или такой пользователь существует", "Некорректные данные", MessageBoxButton.OKCancel, MessageBoxImage.None);
+
+                }
             }
         }
 
-       
+        private void EditUser()
+        {
+            App.Current.Windows[0].Close();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand($"UPDATE UserTable SET FirstName = @FirstName, LastName = @LastName, Password = @Password WHERE UserName = @UserName", connection);
+                try
+                {
+                    command.Parameters.AddWithValue("@UserName", NewUser.Username);
+                    command.Parameters.AddWithValue("@FirstName", NewUser.FirstName);
+                    command.Parameters.AddWithValue("@LastName", NewUser.LastName);
+                   
+                    command.Parameters.AddWithValue("@Password", NewUser.Password);
 
+                    int rowAffected = command.ExecuteNonQuery();
 
-
-
+                    if (rowAffected > 0)
+                    {
+                        MessageBox.Show("Редактирование прошло успешно");                      
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Пользователь не отредактирован");
+                }
+                connection.Close();
+            }
+        }
         // Реализация интерфейса INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-     
+        }     
     }
+    
     public class RelayCommand : ICommand
     {
         private readonly Action _execute;
@@ -156,7 +193,6 @@ namespace MyProject.ViewModels
         {
             return _canExecute == null || _canExecute();
         }
-
         public void Execute(object parameter)
         {
             _execute?.Invoke();
@@ -167,6 +203,5 @@ namespace MyProject.ViewModels
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
-    }
-    
+    }   
 }

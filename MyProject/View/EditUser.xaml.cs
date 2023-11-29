@@ -1,7 +1,4 @@
-﻿using MyProject.Models;
-using MyProject.View;
-using MyProject.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,38 +10,41 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MyProject
+namespace MyProject.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для EditUser.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EditUser : Window
     {
-        public MainWindow()
+        public EditUser()
         {
             InitializeComponent();
-            DataContext = new UserViewModel();
-        }
-        
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Registor r = new();
-            r.Show();           
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
             this.WindowState = WindowState.Minimized;
         }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            Main m = new Main();
+            m.Show();
+            this.Close();
+        }
     }
 }

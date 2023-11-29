@@ -23,23 +23,17 @@ namespace MyProject.View
         public Registor()
         {
             InitializeComponent();
-            DataContext = new UserViewModel();
-           
+            DataContext = new UserViewModel();          
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(id_user.Text == "" && FirstName.Text == "" && LastName.Text == "" && UserName.Text == "" && Password.Text == "")
-            {
-                MessageBox.Show("Вы ввели некоренктные данные!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            MainWindow main = new MainWindow();
-            main.Show();
-            Close();
+            this.WindowState = WindowState.Minimized;
         }
     }
 }

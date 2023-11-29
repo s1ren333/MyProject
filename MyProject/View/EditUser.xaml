@@ -1,0 +1,94 @@
+﻿<Window x:Class="MyProject.View.EditUser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyProject.ViewModels"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="EditUser" Height="350" Width="400" WindowStyle="None">
+    
+        <Window.DataContext>
+            <local:UserViewModel/>
+        </Window.DataContext>
+
+        <Window.Resources>
+            <Style TargetType="TextBox">
+                <Setter Property="FontSize" Value="16"/>
+                <Style.Resources>
+
+                    <Style TargetType="Border">
+
+                        <Setter Property="CornerRadius" Value="9"/>
+                    </Style>
+                </Style.Resources>
+            </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="Gray"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Style.Resources>
+
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="13"/>
+                </Style>
+            </Style.Resources>
+
+        </Style>
+    </Window.Resources>
+
+    <Grid Style="{DynamicResource GridStyle}" >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="200" />
+            <RowDefinition/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Style="{DynamicResource TextStyle}" Text="Редактирование" Grid.Column="1" Grid.Row="0" Foreground="White" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+        <Image Grid.Column="1" Height="50" Width="100" VerticalAlignment="Bottom" Source="C:\Users\s1ren\source\repos\Yp\MyProject\MyProject\MyProject\resourse\icons8-редактировать-48.png"/>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Style="{DynamicResource TextStyle}" Grid.Row="0" FontSize="15" Text="Введите ваш текущий никнейм"/>
+            <TextBox x:Name="UserName" Grid.Row="1" Background="#333333" Foreground="White" Text="{Binding NewUser.Username}" />
+
+            <TextBlock Style="{DynamicResource TextStyle}" Grid.Row="2"  FontSize="15" Text="Введите ваше имя"/>
+            <TextBox x:Name="FirstName" Grid.Row="3" Background="#333333" Foreground="White" Text="{Binding NewUser.FirstName}"/>
+
+            <TextBlock Style="{DynamicResource TextStyle}" Grid.Row="4" FontSize="15" Text="Введите вашу фамилию" />
+            <TextBox x:Name="LastName" Grid.Row="5" Background="#333333" Foreground="White" Text="{Binding NewUser.LastName}" />
+
+
+
+            <TextBlock Style="{DynamicResource TextStyle}" Grid.Row="6" FontSize="15" Text="Придумайте свой пароль" />
+            <TextBox x:Name="Password" Grid.Row="7" Background="#333333"  Foreground="White" Text="{Binding NewUser.Password}"/>
+        </Grid>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Grid.Column="2" Grid.Row="0">
+            <Button HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Background="Transparent" BorderBrush="Transparent" Click="Button_Click">
+                <Image Source="C:\Users\s1ren\source\repos\Yp\MyProject\MyProject\MyProject\resourse\свертывание.png"/>
+            </Button>
+            <Button Background="Transparent" BorderBrush="Transparent" Height="20" Click="Button_Click_2">
+                <Image Source="C:\Users\s1ren\source\repos\Yp\MyProject\MyProject\MyProject\resourse\Отмена.png"/>
+            </Button>
+        </StackPanel>
+
+        <Button Grid.Column="1" Grid.Row="2" Content="Редактировать" Height="30" Width="120" HorizontalAlignment="Left" Command="{Binding EditUserCommand}" Click="Button_Click_1"></Button>
+        <Button Grid.Column="1" Grid.Row="2" Content="Закрыть" Height="30" Width="120" HorizontalAlignment="Right" Click="Button_Click_3"></Button>
+    </Grid>
+</Window>

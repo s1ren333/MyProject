@@ -5,34 +5,106 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyProject"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="300" Background="#212121">
+        ResizeMode="NoResize"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        Title="Окно авторизации" Height="361" Width="400" WindowStyle="None">
+    <!--Background="#212121"--> 
 
-    <Grid>
+    <!--<Border CornerRadius="50"
+            Background="#1b1448"
+            BorderBrush="MediumSlateBlue"
+            BorderThickness="5">
+        
+    </Border>-->
+       
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="9"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+        
+       
+        <Style x:Key="butt" TargetType="Button">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="Gray"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="3" CornerRadius="15">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Width" To="110" Duration="0:0:0.3"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Height" To="35" Duration="0:0:0.3"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Width" To="100" Duration="0:0:0.3"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Height" To="30" Duration="0:0:0.3"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+            
+            <Style.Resources>
+              
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="13"/>
+                </Style>
+            </Style.Resources>
+            
+
+        </Style>
+    </Window.Resources>
+    
+    <Grid Style="{DynamicResource GridStyle}">
+        
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Image Source="resourse/mozg.png" Grid.Column="0" Grid.Row="0" Width="70" Height="70" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="115,0,0,0"/>
-        
-
-        <TextBlock Grid.Row="1" Text="Entrance" Foreground="White" FontSize="28" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="93,0,0,0"/>
-
-        <StackPanel Width="150" Grid.Row="2" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="75,0,0,0">
-            <TextBlock Text="Login" Foreground="White"/>
-            <TextBox x:Name="UserNameText" Background="#333333" BorderBrush="#333333" Text="{Binding Username}" Foreground="Wheat"/>
-            <TextBlock Text="Password" Foreground ="White"/>
-            <TextBox x:Name="PasswordText" Margin="0,0,0,10" Background="#333333" BorderBrush="#333333" Text="{Binding Password}" Foreground="Wheat"/>
-            <Button x:Name="Login" Content="Login" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="#0066CC" Foreground="White" Height="25" FontSize="14" FontWeight="Bold" Command="{Binding LoginCommand}" Click="Login_Click_1"/>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="0">
+            <Button HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Background="Transparent" BorderBrush="Transparent" Click="Button_Click_2">
+                <Image Source="C:\Users\s1ren\source\repos\Yp\MyProject\MyProject\MyProject\resourse\свертывание.png"/>
+            </Button>
+            <Button Background="Transparent" BorderBrush="Transparent" Height="20" Click="Button_Click_1">
+                <Image Source="C:\Users\s1ren\source\repos\Yp\MyProject\MyProject\MyProject\resourse\Отмена.png"/>
+            </Button>
+            
         </StackPanel>
-
-        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="3" Content="No account?" Foreground="White"  Background="#0066CC" Margin="115,29,0,0" Click="Button_Click"></Button>
-
+        <Image Source="resourse/mozg.png" Grid.Column="0" Grid.Row="1" Width="70" Height="70" VerticalAlignment="Center"  HorizontalAlignment="Center" />
+        <TextBlock Style="{DynamicResource TextStyle}" Grid.Row="2" Text="Вход" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel Width="150" Height="130" Grid.Row="3" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <TextBlock Style="{DynamicResource TextStyle}" Text="Введите логин"/>
+            <TextBox x:Name="UserNameText" Background="#333333" Text="{Binding Username}" Foreground="White"/>
+            <TextBlock Style="{DynamicResource TextStyle}" Text="Введите пароль"/>
+            <TextBox x:Name="PasswordText" Background="#333333" Text="{Binding Password}" Foreground="White"/>
+            <Button Style="{DynamicResource butt}" x:Name="Login" Content="Войти" Width="100" Margin="15" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="30" Command="{Binding LoginCommand}" />
+        </StackPanel>
+        <Button Style="{DynamicResource butt}" Width="100" Height="30" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="4" Content="Нет аккаунта?" Click="Button_Click"></Button>
     </Grid>
 </Window>

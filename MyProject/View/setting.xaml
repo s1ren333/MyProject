@@ -1,0 +1,55 @@
+﻿<Window x:Class="MyProject.View.setting"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyProject.View"
+        mc:Ignorable="d" 
+        WindowStartupLocation="CenterScreen"
+        Title="Настройки" Height="200" Width="300" WindowStyle="None">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Style="{DynamicResource GridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="0">
+            <Button HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Background="Transparent" BorderBrush="Transparent" Click="Button_Click_2">
+                <Image Source="C:\Users\s1ren\source\repos\Yp\MyProject\MyProject\MyProject\resourse\свертывание.png"/>
+            </Button>
+            <Button Background="Transparent" BorderBrush="Transparent" Height="20" Click="Button_Click_3">
+                <Image Source="C:\Users\s1ren\source\repos\Yp\MyProject\MyProject\MyProject\resourse\Отмена.png"/>
+            </Button>
+
+        </StackPanel>
+        <TextBlock FontWeight="Bold" Style="{DynamicResource TextStyle}" Grid.Row="0" HorizontalAlignment="Center" Text="Смена цвета оформления"></TextBlock>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+
+
+            <Button Height="60" Width="100" Grid.Column="0"  Command="{Binding DarkThemeCommand}" Click="Button_Click">
+                <Image Source="C:\Users\s1ren\source\repos\Yp\MyProject\MyProject\MyProject\resourse\Луна.png"/>
+            </Button>
+            <Button Height="60" Width="120" Grid.Column="1" Command="{Binding LightThemeCommand}" Click="Button_Click_1">
+                <Image Source="C:\Users\s1ren\source\repos\Yp\MyProject\MyProject\MyProject\resourse\Солнце.png"/>
+            </Button>
+        </Grid>
+
+    </Grid>
+</Window>
+    

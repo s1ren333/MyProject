@@ -8,7 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resourse\mozg.png" />
+    <None Remove="resourse\Users.png" />
+    <None Remove="View\настройки.png" />
+    <None Remove="View\Обновление.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="resourse\mozg.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resourse\Users.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\настройки.png" />
+    <Resource Include="View\Обновление.png" />
   </ItemGroup>
 
 </Project>
